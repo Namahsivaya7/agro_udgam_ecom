@@ -1,0 +1,152 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Category {
+  Rice_Atta_And_Dals
+  Oils_Masalas_And_Sauces
+  Beakfast_Foods
+  Biscuits
+  Health_And_Nutrition
+  Cleaning_And_Households
+  Hygine_And_Personal_Care
+  Body_And_Bath
+  Baby_Care
+  Pet_Supplies
+  Drinks_And_Beverages
+}
+
+model Item {
+  id          String         @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  mrp         Float
+  price       Float
+  images      String[]
+  description String?
+  brand       String?
+  quantity    Int            @default(1)
+  details     ProductDetails
+  category    String
+}
+
+type ProductDetails {
+  soldBy   String?
+  size     Int?
+  type     String?
+  capacity  Float?
+  origin   String?
+  features String?
+  weight   Float?
+  pattern  String?
+  units    String?
+  flavour  String?
+  style    String?
+}
+
+type CartItem {
+  id          String
+  name        String
+  image       String
+  description String
+  mrp         Float
+  price       Float
+  quantity    Int
+  brand       String?
+  weight      Float?
+}
+
+enum LoginType {
+  Normal
+  GitHub
+  Gmail
+  Facebook
+}
+
+enum UserRole {
+  Admin
+  Dispatcher
+  DeliveryPartner
+}
+
+model User {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  email         String?    @unique
+  emailVerified Boolean    @default(false)
+  phone         String     @unique
+  password      String?
+  loginType     LoginType  @default(Normal)
+  role          UserRole?
+  addresses     Address[]
+  cart          CartItem[]
+  orders        Order[]
+}
+
+enum PaymentMode {
+  COD
+  UPI
+  CREDIT_CARD
+  DEBIT_CARD
+  NET_BANKING
+  PAYTM
+}
+
+enum OrderStatus {
+  Created
+  Confirmed
+  Dispatched
+  OutForDelivery
+  Delivered
+  Cancelled
+  Returned
+}
+
+type Address {
+  name    String
+  mobile  String
+  pincode Int
+  map     String?
+  nick    String?
+  address String
+}
+
+type CartTotal{
+  mrp       Float
+  price     Float
+  discount  Float
+  amount    Float
+}
+
+model Order {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  payment   PaymentMode @default(COD)
+  items     CartItem[]
+  total     CartTotal
+  status    OrderStatus @default(Created)
+  address   Address
+  userId    String      @db.ObjectId
+  user      User        @relation(fields: [userId], references: [id])
+}
+
+model ItemCategory {
+  id            String      @id @map("_id")
+  name          String      
+  banner        String[]     
+  description   String?
+}
+
+model ServiceArea {
+  id            Int      @id @map("_id")
+  name          String      
+  areas         String[]
+}
