@@ -3,7 +3,7 @@ import { Metadata } from "next";
 export const appName = process.env.NEXT_PUBLIC_APP_NAME ?? "Trisandya Mart";
 export const siteAddress =
   process.env.NEXT_PUBLIC_SITE_ADDRESS ?? "http://localhost:3000";
-export const appLogo = `${siteAddress}/logo.png`;
+export const appLogo = `${siteAddress}`;
 
 export const API_ROOT = `${siteAddress}/api/`;
 
@@ -18,7 +18,7 @@ export const SITE_DESCRIPTION = `Welcome to ${appName} – your one-stop solutio
 
 export const DEFAULT_METADATA: Metadata = {
   metadataBase: new URL(siteAddress),
-  title: appName,
+ 
   description: SITE_DESCRIPTION,
   keywords:
     "Online Grocery Shopping, Local Grocery Delivery, Fresh Produce Delivery, Same-Day Grocery Delivery, Convenient Grocery Ordering, Home Grocery Delivery, Local Produce Delivery, Fresh Food Delivery, Quick Grocery Delivery, Organic Grocery Delivery, Neighborhood Grocery Service, Affordable Grocery Delivery, Reliable Food Delivery, Easy Online Grocery Ordering, Local Grocery Marketplace, Sustainable Grocery Delivery, Quality Grocery Selection, Efficient Grocery Service, Contactless Grocery Delivery, Personalized Grocery Experience",
@@ -27,7 +27,7 @@ export const DEFAULT_METADATA: Metadata = {
     title: appName,
     description: SITE_DESCRIPTION,
     url: siteAddress,
-    images: appLogo,
+    
   },
 };
 
@@ -36,12 +36,11 @@ export const ORG_SCHEMA = {
     "@context": "http://schema.org/",
     "@type": "Organization",
     name: appName,
-    logo: appLogo,
+   
     url: siteAddress,
     address: {
       "@type": "PostalAddress",
-      streetAddress:
-        "3-13A, Jammichettu Center, Pedakallepalli, Mopidevi Mandal, Krishna Dist",
+      streetAddress:"",
       addressLocality: "Vijayawada",
       addressRegion: "Andhra Pradesh",
       postalCode: "521130",
