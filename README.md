@@ -15,7 +15,7 @@ bun dev
 ```
 
 <!-- 
-Go to http://localhost:3000/admin for admin dashboard
+Go to http://localhost:3000/admin for admin dashboard 
  -->
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

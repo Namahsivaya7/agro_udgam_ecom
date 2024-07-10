@@ -173,16 +173,16 @@ const Header: React.FC = () => {
         <Link href="/" style={{ color: "inherit" }}>
           {md ? (
             <Typography.Title level={3} style={{ fontWeight: 700, margin: 0 }}>
-              {appName}
+              {/* {appName} */}
             </Typography.Title>
-          ) : (
-            <Image
-              src={appLogo}
-              alt={appName}
-              width={48}
-              height={48}
-              preview={false}
-            />
+          ) : (<p></p>
+            // <Image
+            //   src={appLogo}
+            //   alt={appName}
+            //   width={48}
+            //   height={48}
+            //   preview={false}
+            // />
           )}
         </Link>
         <ItemSearch />
