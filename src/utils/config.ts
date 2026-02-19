@@ -5,7 +5,9 @@ export const siteAddress =
   process.env.NEXT_PUBLIC_SITE_ADDRESS ?? "http://localhost:3000";
 export const appLogo = `${siteAddress}`;
 
-export const API_ROOT = `${siteAddress}/api/`;
+// Use relative path in browser so requests stay same-origin (avoids CORS / loopback blocking on Vercel)
+export const API_ROOT =
+  typeof window !== "undefined" ? "/api/" : `${siteAddress}/api/`;
 
 export const IMAGE_CDN_ROOT = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/`;
 export const CN_THUMBNAIL_CONF = "c_thumb,w_200,g_face"; // For Thumbnails
