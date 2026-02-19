@@ -1,12 +1,14 @@
 import prisma from "@/lib/prisma";
-
 import { NextResponse } from "next/server";
-export interface categoryParams {
-    params: { categoryId: string };
-  }
-export async function DELETE(req: Request, {params} :categoryParams) {
-    const Category = await prisma.itemCategory.delete({
-      where: { id: params.categoryId},
-    });
-    return NextResponse.json(Category);
-  }
+
+export const dynamic = "force-dynamic";
+
+type RouteContext = { params: Promise<{ categoryId: string }> };
+
+export async function DELETE(_req: Request, { params }: RouteContext) {
+  const { categoryId } = await params;
+  const deleted = await prisma.itemCategory.delete({
+    where: { id: categoryId },
+  });
+  return NextResponse.json(deleted);
+}
