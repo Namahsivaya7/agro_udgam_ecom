@@ -5,9 +5,10 @@ export const siteAddress =
   process.env.NEXT_PUBLIC_SITE_ADDRESS ?? "http://localhost:3000";
 export const appLogo = `${siteAddress}`;
 
-// Use relative path in browser so requests stay same-origin (avoids CORS / loopback blocking on Vercel)
-export const API_ROOT =
+// Resolved at runtime so the client bundle always uses "/api/" in the browser (avoids CORS / loopback on Vercel)
+export const getApiRoot = () =>
   typeof window !== "undefined" ? "/api/" : `${siteAddress}/api/`;
+export const API_ROOT = getApiRoot();
 
 export const IMAGE_CDN_ROOT = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/`;
 export const CN_THUMBNAIL_CONF = "c_thumb,w_200,g_face"; // For Thumbnails
