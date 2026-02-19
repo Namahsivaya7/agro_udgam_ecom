@@ -1,15 +1,17 @@
 import { siteAddress } from "@/utils/config";
-import { categoryItems } from "@/utils/util";
+import service from "@/lib/service";
+import { ItemCategory } from "@prisma/client";
 import { MetadataRoute } from "next";
 
-const categories: MetadataRoute.Sitemap = categoryItems.map((cat) => ({
-  url: `${siteAddress}/category/${cat.key}`,
-  lastModified: new Date(),
-  changeFrequency: "daily",
-  priority: 0.8,
-}));
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const categories = await service.getCategories();
+  const categoryEntries: MetadataRoute.Sitemap = categories.map((cat: ItemCategory) => ({
+    url: `${siteAddress}/category/${cat.id}`,
+    lastModified: new Date(),
+    changeFrequency: "daily" as const,
+    priority: 0.8,
+  }));
 
-export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: siteAddress!,
@@ -17,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 1,
     },
-    ...categories,
+    ...categoryEntries,
     {
       url: `${siteAddress}/search`,
       lastModified: new Date(),

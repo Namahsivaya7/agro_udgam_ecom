@@ -1,4 +1,4 @@
-import { Item, Order } from "@prisma/client";
+import { Item, ItemCategory, Order } from "@prisma/client";
 import prisma from "./prisma";
 
 const getItems = async (): Promise<Item[]> => {
@@ -15,10 +15,15 @@ const getItem = async (id: string): Promise<Item | null> => {
   return item;
 };
 
-const getItemsByCategory = async (category: string): Promise<Item[]> => {
+const getCategories = async (): Promise<ItemCategory[]> => {
+  const categories = await prisma.itemCategory.findMany({});
+  return categories;
+};
+
+const getItemsByCategory = async (categoryId: string): Promise<Item[]> => {
   const items = await prisma.item.findMany({
     where: {
-      category: category,
+      category: categoryId,
     },
   });
   return items;
@@ -37,25 +42,14 @@ const getItemsByFilter = async ({
 }: Filter): Promise<Item[]> => {
   const items = await prisma.item.findMany({
     where: {
-      category: category,
-      brand: {
-        contains: brand,
-        mode: "insensitive",
-      },
-      OR: [
-        {
-          name: {
-            contains: q,
-            mode: "insensitive",
-          },
-        },
-        {
-          description: {
-            contains: q,
-            mode: "insensitive",
-          },
-        },
-      ],
+      ...(category && { category }),
+      ...(brand && { brand: { contains: brand, mode: "insensitive" } }),
+      ...(q && {
+        OR: [
+          { name: { contains: q, mode: "insensitive" } },
+          { description: { contains: q, mode: "insensitive" } },
+        ],
+      }),
     },
   });
   return items;
@@ -75,10 +69,11 @@ const getOrders = async (): Promise<OrderType[]> => {
 
 const service = {
   getItems,
-  getOrders,
+  getItem,
+  getCategories,
   getItemsByCategory,
   getItemsByFilter,
-  getItem,
+  getOrders,
 };
 
 export default service;

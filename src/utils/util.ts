@@ -5,13 +5,6 @@ export const getImage = (path: string) => `${IMAGE_CDN_ROOT}${path}`;
 export const getThumbnail = (path: string) =>
   `${IMAGE_CDN_ROOT}${CN_THUMBNAIL_CONF}/${path}`;
 
-export const categoryItems = [
-  { key: "Rice_Atta_And_Dals", label: "Rice, Atta & Dals" },
-  { key: "Oils_Masalas_And_Sauces", label: "Oils, Masalas & Sauces" },
-  { key: "Biscuits", label: "Biscuits" },
-  { key: "Health_And_Nutrition", label: "Health & Nutrition" },
-];
-
 export function debounce<Params extends any[]>(
   func: (...args: Params) => any,
   timeout: number

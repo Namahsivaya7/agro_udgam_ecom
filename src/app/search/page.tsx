@@ -11,9 +11,6 @@ type Props = {
     brand?: string;
     category?: string;
   };
-  params: {
-    categoryId: string;
-  };
 };
 
 export async function generateMetadata({

@@ -10,20 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Category {
-  Rice_Atta_And_Dals
-  Oils_Masalas_And_Sauces
-  Beakfast_Foods
-  Biscuits
-  Health_And_Nutrition
-  Cleaning_And_Households
-  Hygine_And_Personal_Care
-  Body_And_Bath
-  Baby_Care
-  Pet_Supplies
-  Drinks_And_Beverages
-}
-
 model Item {
   id          String         @id @default(auto()) @map("_id") @db.ObjectId
   name        String
@@ -41,7 +27,7 @@ type ProductDetails {
   soldBy   String?
   size     Int?
   type     String?
-  capacity  Float?
+  capacity Float?
   origin   String?
   features String?
   weight   Float?
@@ -118,11 +104,11 @@ type Address {
   address String
 }
 
-type CartTotal{
-  mrp       Float
-  price     Float
-  discount  Float
-  amount    Float
+type CartTotal {
+  mrp      Float
+  price    Float
+  discount Float
+  amount   Float
 }
 
 model Order {
@@ -139,14 +125,14 @@ model Order {
 }
 
 model ItemCategory {
-  id            String      @id @map("_id")
-  name          String      
-  banner        String[]     
-  description   String?
+  id          String   @id @map("_id")
+  name        String
+  banner      String[]
+  description String?
 }
 
 model ServiceArea {
-  id            Int      @id @map("_id")
-  name          String      
-  areas         String[]
+  id    Int      @id @map("_id")
+  name  String
+  areas String[]
 }
