@@ -2,7 +2,6 @@ import React from "react";
 import { Metadata } from "next";
 import { appName } from "@/utils/config";
 import service from "@/lib/service";
-import { Category } from "@prisma/client";
 import ItemGrid from "@/components/ItemGrid";
 import { Divider } from "antd";
 
@@ -10,10 +9,10 @@ type Props = {
   searchParams: {
     q?: string;
     brand?: string;
-    category?: Category;
+    category?: string;
   };
   params: {
-    categoryId: Category;
+    categoryId: string;
   };
 };
 

@@ -83,7 +83,7 @@ const Categories: React.FC = () => {
                   }}
                 >
                   {getCategory.map((category: any) => (
-                    <Flex style={{  }}>
+                    <Flex key={category.id} style={{  }}>
                       <List.Item style={{}}>
                         
                         <List.Item.Meta

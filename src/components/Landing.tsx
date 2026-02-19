@@ -1,7 +1,7 @@
 "use client";
 import ItemGrid from "@/components/ItemGrid";
 import { categoryItems } from "@/utils/util";
-import { Category, Item } from "@prisma/client";
+import { Item } from "@prisma/client";
 import { Card, theme } from "antd";
 import Link from "next/link";
 
@@ -16,7 +16,7 @@ export default function Landing({ data }: { data: Item[] }) {
     }
     acc[d.category].push(d);
     return acc;
-  }, {} as Record<Category, Item[]>);
+  }, {} as Record<string, Item[]>);
 
   return (
     <>

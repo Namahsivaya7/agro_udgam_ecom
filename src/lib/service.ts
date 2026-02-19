@@ -1,4 +1,4 @@
-import { Category, Item, Order } from "@prisma/client";
+import { Item, Order } from "@prisma/client";
 import prisma from "./prisma";
 
 const getItems = async (): Promise<Item[]> => {
@@ -15,7 +15,7 @@ const getItem = async (id: string): Promise<Item | null> => {
   return item;
 };
 
-const getItemsByCategory = async (category: Category): Promise<Item[]> => {
+const getItemsByCategory = async (category: string): Promise<Item[]> => {
   const items = await prisma.item.findMany({
     where: {
       category: category,
@@ -27,7 +27,7 @@ const getItemsByCategory = async (category: Category): Promise<Item[]> => {
 type Filter = {
   q?: string;
   brand?: string;
-  category?: Category;
+  category?: string;
 };
 
 const getItemsByFilter = async ({

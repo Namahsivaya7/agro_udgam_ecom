@@ -9,14 +9,17 @@ import {
   Form,
   Input,
   InputNumber,
+  MenuProps,
   Row,
   Select,
   message,
 } from "antd";
-import { categoryItems, diff } from "@/utils/util";
+import { diff } from "@/utils/util";
 import { Item } from "@prisma/client";
 import ImageUpload from "./ImageUpload";
 import { updateItem } from "@/lib/api";
+import { useCategoryStore } from "@/lib/categoryStore";
+import Link from "next/link";
 
 export default function EditItem({
   data,
@@ -48,6 +51,17 @@ export default function EditItem({
     setItem(data);
   }, [data]);
 
+  const getCategory = useCategoryStore((s) => s.categories);
+
+  const categoryMenuItems: MenuProps["items"] = getCategory.map((cat) => ({
+    key: cat.id,
+    label: (
+      <Link rel="noopener noreferrer" href={`/category/${cat.id}`}>
+        {cat.name}
+      </Link>
+    ),
+  }));
+
   return (
     <Drawer
       title="Edit Items"
@@ -74,7 +88,7 @@ export default function EditItem({
             <Col xs={24}>
               <Form.Item label="Category" name="category">
                 <Select>
-                  {categoryItems?.map(({ key, label }:any) => (
+                  {categoryMenuItems?.map(({ key, label }:any) => (
                     <Select.Option key={key} value={key}>
                       {label}
                     </Select.Option>
