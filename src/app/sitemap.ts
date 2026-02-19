@@ -4,13 +4,18 @@ import { ItemCategory } from "@prisma/client";
 import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const categories = await service.getCategories();
-  const categoryEntries: MetadataRoute.Sitemap = categories.map((cat: ItemCategory) => ({
-    url: `${siteAddress}/category/${cat.id}`,
-    lastModified: new Date(),
-    changeFrequency: "daily" as const,
-    priority: 0.8,
-  }));
+  let categoryEntries: MetadataRoute.Sitemap = [];
+  try {
+    const categories = await service.getCategories();
+    categoryEntries = categories.map((cat: ItemCategory) => ({
+      url: `${siteAddress}/category/${cat.id}`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 0.8,
+    }));
+  } catch {
+    // DB may be unavailable at build time (e.g. Vercel); sitemap still works without category URLs
+  }
 
   return [
     {
